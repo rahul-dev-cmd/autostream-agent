@@ -19,7 +19,11 @@ def run_chat():
         input_state = {"messages": [{"role": "user", "content": user_input}]}
         
         # Invoke the graph with the session config
-        result = app.invoke(input_state, config=config)
+        try:
+            result = app.invoke(input_state, config=config)
+        except Exception as e:
+            print(f"Error: {type(e).__name__}: {e}")
+            continue
         
         # Extract and print the agent's latest response from the returned state
         latest_response = result["messages"][-1]["content"]
